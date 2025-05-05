@@ -2,18 +2,18 @@
   "version": 2,
   "builds": [
     {
-      "src": "task/app.py",
+      "src": "app.py",
       "use": "@vercel/python",
       "config": {
         "maxLambdaSize": "15mb",
-        "includeFiles": ["templates/**"]
+        "includeFiles": ["templates/**", "uploads/**"]
       }
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "task/app.py"
+      "dest": "app.py"
     }
   ]
 }
