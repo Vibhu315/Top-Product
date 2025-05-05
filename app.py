@@ -3,7 +3,6 @@ from flask import Flask, render_template, request, jsonify, send_from_directory
 import pandas as pd
 import numpy as np
 import os
-from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = '/tmp/uploads'  # Changed for Vercel compatibility
@@ -138,12 +137,8 @@ def upload_file():
             return jsonify({'error': str(e)}), 500
     else:
         return jsonify({'error': 'Allowed file types are xlsx, xls'}), 400
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
 
 def vercel_handler(request, context):
     return handle_request(app, request, context)
 
-if __name__ == '__main__':
-    app.run(debug=True)
-# Add this below all your existing code
+
