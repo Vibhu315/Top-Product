@@ -138,6 +138,8 @@ def upload_file():
             return jsonify({'error': str(e)}), 500
     else:
         return jsonify({'error': 'Allowed file types are xlsx, xls'}), 400
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
 
 def vercel_handler(request, context):
     return handle_request(app, request, context)
@@ -145,5 +147,3 @@ def vercel_handler(request, context):
 if __name__ == '__main__':
     app.run(debug=True)
 # Add this below all your existing code
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
