@@ -3,6 +3,17 @@ from flask import Flask, render_template, request, jsonify, send_from_directory
 import pandas as pd
 import numpy as np
 import os
+import logging
+
+app = Flask(__name__)
+app.logger.setLevel(logging.DEBUG)  # Add this line
+
+# Your existing code...
+
+@app.errorhandler(500)
+def internal_error(error):
+    app.logger.error(f"Server Error: {error}")
+    return jsonify({"error": "Internal Server Error"}), 500
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = '/tmp/uploads'  # Changed for Vercel compatibility
@@ -137,7 +148,11 @@ def upload_file():
             return jsonify({'error': str(e)}), 500
     else:
         return jsonify({'error': 'Allowed file types are xlsx, xls'}), 400
-
+        
+@app.errorhandler(500)
+def internal_error(error):
+    app.logger.error(f"Server Error: {error}")
+    return jsonify({"error": "Internal Server Error"}), 500
 def vercel_handler(request, context):
     return handle_request(app, request, context)
 
